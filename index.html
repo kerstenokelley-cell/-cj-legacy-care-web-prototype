@@ -1,0 +1,1508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CJ Legacy Care</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,500;0,600;0,700;1,500&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --plum-950: #2B1E33;
+    --plum-800: #3D2645;
+    --plum-700: #4A2C5E;
+    --plum-500: #6E4A82;
+    --plum-200: #E4D9EA;
+    --plum-100: #F1EAF4;
+    --ivory: #FAF7F4;
+    --paper: #FFFFFF;
+    --gold: #B8935A;
+    --gold-100: #F5EBDA;
+    --rose: #A14550;
+    --rose-100: #F7E6E8;
+    --sage: #4C6F52;
+    --sage-100: #E7EFE8;
+    --amber: #8A5F1E;
+    --amber-100: #FAF0DF;
+    --ink-muted: #6E6277;
+    --line: #E5DDE9;
+    --radius-sm: 8px;
+    --radius-md: 14px;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    font-family: 'Public Sans', -apple-system, sans-serif;
+    background: var(--ivory);
+    color: var(--plum-950);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, .serif {
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-weight: 600;
+    margin: 0;
+  }
+
+  button {
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+    text-align: inherit;
+    cursor: pointer;
+    border: none;
+    background: none;
+    padding: 0;
+    margin: 0;
+  }
+  button:disabled { opacity: 0.55; cursor: default; }
+
+  button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible {
+    outline: 2px solid var(--plum-700);
+    outline-offset: 2px;
+  }
+
+  #app {
+    max-width: 480px;
+    margin: 0 auto;
+    min-height: 100vh;
+    background: var(--ivory);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    box-shadow: 0 0 40px rgba(43,30,51,0.08);
+  }
+
+  /* ---------- Demo banner ---------- */
+  .demo-banner {
+    position: relative;
+    z-index: 20;
+    background: var(--gold);
+    color: var(--plum-950);
+    text-align: center;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    padding: 6px 10px;
+  }
+
+  /* ---------- Header ---------- */
+  .topbar {
+    background: var(--plum-800);
+    color: var(--ivory);
+    padding: 18px 20px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .brand-mark {
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--gold) 0%, var(--rose) 100%);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Source Serif 4', serif;
+    font-weight: 700;
+    color: var(--plum-950);
+    font-size: 15px;
+  }
+  .brand-name { font-family:'Source Serif 4', serif; font-size: 18px; font-weight: 600; line-height: 1.1; }
+  .brand-sub { font-size: 11px; color: var(--plum-200); letter-spacing: 0.02em; }
+  .avatar-btn {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--plum-500);
+    color: var(--ivory);
+    font-weight: 600;
+    font-size: 14px;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  /* ---------- Main scroll area ---------- */
+  main { flex: 1; padding: 18px 18px 100px; overflow-y: auto; }
+
+  .greeting { margin-bottom: 18px; }
+  .greeting p { margin: 2px 0 0; color: var(--ink-muted); font-size: 14px; }
+
+  .stat-row { display: flex; gap: 10px; margin-bottom: 22px; }
+  .stat-card {
+    flex: 1;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    padding: 12px 12px;
+  }
+  .stat-card .num { font-family:'Source Serif 4', serif; font-size: 22px; font-weight: 700; color: var(--plum-800); }
+  .stat-card .label { font-size: 11.5px; color: var(--ink-muted); margin-top: 2px; }
+
+  .section-heading {
+    display: flex; align-items: baseline; justify-content: space-between;
+    margin: 26px 0 12px;
+  }
+  .section-heading h2 { font-size: 17px; }
+  .section-heading .link { font-size: 13px; color: var(--plum-700); font-weight: 600; }
+
+  /* ---------- Visit cards ---------- */
+  .visit-card {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--plum-700);
+    border-radius: var(--radius-sm);
+    padding: 14px 14px 12px;
+    margin-bottom: 10px;
+  }
+  .visit-card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
+  .visit-provider { font-weight: 600; font-size: 14.5px; }
+  .visit-date { font-size: 12px; color: var(--ink-muted); margin-top: 1px; }
+  .status-pill {
+    font-size: 10.5px; font-weight: 600; padding: 3px 9px; border-radius: 999px;
+    white-space: nowrap;
+  }
+  .status-approved { background: var(--sage-100); color: var(--sage); }
+  .status-review { background: var(--amber-100); color: var(--amber); }
+  .visit-reason { font-size: 13px; color: var(--plum-800); margin-top: 8px; font-weight: 500; }
+  .visit-summary { font-size: 13px; color: var(--ink-muted); margin-top: 4px; line-height: 1.5; }
+  .visit-meta-row { display: flex; flex-wrap: wrap; gap: 6px 14px; margin-top: 10px; font-size: 11.5px; color: var(--plum-700); }
+  .visit-meta-row span b { color: var(--plum-950); font-weight: 600; }
+  .view-visit-btn {
+    margin-top: 12px;
+    display: inline-block;
+    font-size: 12.5px; font-weight: 600;
+    color: var(--plum-800);
+    background: var(--plum-100);
+    padding: 7px 14px;
+    border-radius: 999px;
+  }
+
+  /* ---------- Generic list rows ---------- */
+  .row-card {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    padding: 13px 14px;
+    margin-bottom: 9px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .row-icon {
+    width: 38px; height: 38px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; flex-shrink: 0;
+  }
+  .row-main { flex: 1; min-width: 0; }
+  .row-title { font-size: 14px; font-weight: 600; }
+  .row-sub { font-size: 12px; color: var(--ink-muted); margin-top: 1px; }
+
+  /* ---------- Tasks ---------- */
+  .task-card {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    padding: 13px 14px;
+    margin-bottom: 9px;
+  }
+  .task-top { display: flex; justify-content: space-between; gap: 8px; align-items: flex-start; }
+  .task-title { font-size: 14px; font-weight: 600; }
+  .task-meta { font-size: 12px; color: var(--ink-muted); margin-top: 4px; }
+  .task-overdue { color: var(--rose); font-weight: 600; }
+  .status-select {
+    margin-top: 10px; width: 100%;
+    font-size: 12.5px; font-weight: 600;
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: 1px solid var(--line);
+    background: var(--ivory);
+    color: var(--plum-950);
+  }
+
+  /* ---------- Family Village ---------- */
+  .family-card {
+    background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius-sm);
+    padding: 13px 14px; margin-bottom: 9px; display: flex; align-items: center; gap: 12px;
+  }
+  .family-avatar {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: var(--plum-100); color: var(--plum-700);
+    font-weight: 700; font-size: 14px;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .role-badge {
+    font-size: 10.5px; font-weight: 600; padding: 3px 8px; border-radius: 999px;
+    background: var(--gold-100); color: #7A5A22;
+  }
+  .activity-item { font-size: 12.5px; color: var(--ink-muted); padding: 8px 0; border-top: 1px solid var(--line); }
+  .activity-item:first-child { border-top: none; }
+  .activity-item b { color: var(--plum-950); font-weight: 600; }
+
+  /* ---------- Buttons ---------- */
+  .btn-primary {
+    background: var(--plum-800); color: var(--ivory);
+    padding: 12px 18px; border-radius: 10px; font-weight: 600; font-size: 14px;
+    width: 100%; text-align: center;
+  }
+  .btn-secondary {
+    background: var(--plum-100); color: var(--plum-800);
+    padding: 12px 18px; border-radius: 10px; font-weight: 600; font-size: 14px;
+    width: 100%; text-align: center;
+  }
+  .fab {
+    position: absolute;
+    right: 20px; bottom: 92px;
+    width: 52px; height: 52px; border-radius: 50%;
+    background: var(--plum-800); color: var(--ivory);
+    font-size: 26px; line-height: 1;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 6px 18px rgba(43,30,51,0.28);
+  }
+
+  /* ---------- Forms ---------- */
+  .field { margin-bottom: 14px; }
+  .field label { display: block; font-size: 12.5px; font-weight: 600; color: var(--plum-800); margin-bottom: 6px; }
+  .field input, .field select, .field textarea {
+    width: 100%; padding: 11px 12px; border-radius: 9px;
+    border: 1px solid var(--line); background: var(--paper);
+    font-family: inherit; font-size: 14px; color: var(--plum-950);
+  }
+  .field textarea { resize: vertical; min-height: 70px; }
+  .upload-box {
+    display: block;
+    width: 100%;
+    border: 1.5px dashed var(--plum-500);
+    background: var(--plum-100);
+    border-radius: var(--radius-sm);
+    padding: 20px 14px;
+    text-align: center;
+    font-size: 12.5px;
+    color: var(--plum-700);
+  }
+  .divider-label {
+    font-size: 11px; font-weight: 700; text-transform: none;
+    color: var(--ink-muted);
+    letter-spacing: 0.01em;
+    margin: 20px 0 10px;
+    padding-top: 14px;
+    border-top: 1px solid var(--line);
+  }
+
+  /* ---------- Disclaimer ---------- */
+  .disclaimer {
+    background: var(--rose-100);
+    border-radius: var(--radius-sm);
+    padding: 12px 13px;
+    font-size: 12px;
+    color: #7A4750;
+    line-height: 1.5;
+    display: flex; gap: 8px;
+    margin: 10px 0 4px;
+  }
+  .disclaimer .mark { font-size: 15px; flex-shrink: 0; }
+
+  .ai-summary-box {
+    background: var(--plum-100);
+    border-radius: var(--radius-sm);
+    padding: 13px 14px;
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--plum-950);
+  }
+  .ai-summary-label { font-size: 11px; font-weight: 700; color: var(--plum-700); margin-bottom: 6px; letter-spacing: 0.01em; }
+
+  /* ---------- Bottom nav ---------- */
+  nav.tabbar {
+    position: sticky; bottom: 0;
+    background: var(--paper);
+    border-top: 1px solid var(--line);
+    display: flex;
+    padding: 8px 4px calc(8px + env(safe-area-inset-bottom));
+  }
+  nav.tabbar button {
+    flex: 1;
+    display: flex; flex-direction: column; align-items: center; gap: 3px;
+    font-size: 10.5px; font-weight: 600;
+    color: var(--ink-muted);
+    padding: 6px 2px;
+    border-radius: 10px;
+  }
+  nav.tabbar button.active { color: var(--plum-800); background: var(--plum-100); }
+  nav.tabbar .tab-icon { font-size: 18px; }
+
+  /* ---------- Modal / detail overlay ---------- */
+  .overlay {
+    position: absolute; inset: 0;
+    background: var(--ivory);
+    display: flex; flex-direction: column;
+    z-index: 10;
+  }
+  .overlay-header {
+    display: flex; align-items: center; gap: 10px;
+    padding: 16px 18px; background: var(--plum-800); color: var(--ivory);
+  }
+  .overlay-header .back { font-size: 20px; }
+  .overlay-header h2 { font-size: 16px; color: var(--ivory); }
+  .overlay-body { flex: 1; overflow-y: auto; padding: 18px; padding-bottom: 40px; }
+
+  .badge-role {
+    display: inline-block; font-size: 11px; font-weight: 600;
+    color: var(--plum-200); background: rgba(255,255,255,0.12);
+    padding: 3px 9px; border-radius: 999px; margin-top: 4px;
+  }
+
+  .lock-note {
+    display: flex; gap: 8px; align-items: flex-start;
+    background: var(--plum-100); border-radius: var(--radius-sm);
+    padding: 12px 13px; font-size: 12px; color: var(--plum-700); line-height: 1.5;
+    margin-top: 14px;
+  }
+
+  .profile-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 14px; }
+  .profile-item { background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 11px 12px; }
+  .profile-item .k { font-size: 10.5px; color: var(--ink-muted); font-weight: 600; }
+  .profile-item .v { font-size: 13.5px; font-weight: 600; margin-top: 2px; }
+
+  .empty-note { font-size: 12.5px; color: var(--ink-muted); text-align: center; padding: 18px 10px; }
+
+  @media (max-width: 380px) {
+    main { padding: 14px 14px 100px; }
+  }
+</style>
+</head>
+<body>
+<div id="app"></div>
+
+<script>
+// ---------------------------------------------------------------
+// Sample data — fictional, for demo purposes only
+// ---------------------------------------------------------------
+const state = {
+  tab: 'dashboard',
+  overlay: null, // {type:'visit', id} or {type:'profile'} or {type:'newVisit'}
+  careRecipient: {
+    name: 'Evelyn Carter',
+    dob: 'March 14, 1943 (Age 83)',
+    conditions: 'Type 2 diabetes, mild hypertension, osteoarthritis',
+    allergies: 'Penicillin',
+    emergencyContact: 'Daniel Carter (son) — (555) 261-4790',
+    primaryPhysician: 'Dr. Aisha Rowan, Internal Medicine'
+  },
+  currentUser: { name: 'Maria Carter', role: 'Primary Caregiver' },
+  medications: [
+    { id:'m1', name:'Metformin', dose:'500mg', freq:'Twice daily, with meals', refillDays: 6 },
+    { id:'m2', name:'Lisinopril', dose:'10mg', freq:'Once daily, morning', refillDays: 21 },
+    { id:'m3', name:'Meloxicam', dose:'7.5mg', freq:'Once daily, as needed for joint pain', refillDays: 2 },
+  ],
+  visits: [
+    {
+      id:'v1',
+      provider: 'Dr. Aisha Rowan',
+      specialty: 'Internal Medicine',
+      date: 'Aug 28, 2026',
+      reason: 'Quarterly diabetes check-in',
+      caregiverNotes: 'A1C slightly elevated. Dr. Rowan adjusted metformin timing and wants a follow-up in 6 weeks. Evelyn mentioned some evening dizziness.',
+      documents: [],
+      aiSummary: 'Routine diabetes follow-up. Blood sugar control has slipped slightly since the last visit. The physician adjusted the metformin dosing schedule and asked to recheck labs in six weeks. Evelyn also reported occasional evening dizziness, which the physician noted for monitoring.',
+      approved: true,
+      shared: true,
+      medChangesConfirmed: true,
+      draftMedChanges: [
+        { id:'v1-mc0', name:'Metformin', change:'Timing adjusted to twice daily with meals', checked:true },
+      ],
+      draftFollowUps: [
+        { id:'v1-fu0', description:'Schedule 6-week diabetes follow-up', timeframe:'6 weeks', assignee:'Maria Carter', dueDate:'2026-10-09', taskCreated:true },
+      ],
+      followUpNote: 'Oct 9, 2026',
+      generating: false,
+      error: null,
+    },
+    {
+      id:'v2',
+      provider: 'Dr. Priya Nandakumar',
+      specialty: 'Rheumatology',
+      date: 'Aug 12, 2026',
+      reason: 'Knee pain evaluation',
+      caregiverNotes: 'X-ray showed mild progression of osteoarthritis. Started Meloxicam. Physical therapy referral given.',
+      documents: [],
+      aiSummary: 'Evaluation for ongoing knee pain. Imaging showed mild progression of arthritis in the joint. The physician started a new anti-inflammatory medication and provided a referral to physical therapy.',
+      approved: true,
+      shared: true,
+      medChangesConfirmed: true,
+      draftMedChanges: [
+        { id:'v2-mc0', name:'Meloxicam', change:'Started 7.5mg once daily for joint pain', checked:true },
+      ],
+      draftFollowUps: [
+        { id:'v2-fu0', description:'Book physical therapy consult', timeframe:'as soon as possible', assignee:'Daniel Carter', dueDate:'2026-08-26', taskCreated:true },
+      ],
+      followUpNote: 'None scheduled',
+      generating: false,
+      error: null,
+    },
+    {
+      id:'v3',
+      provider: 'Dr. Aisha Rowan',
+      specialty: 'Internal Medicine',
+      date: 'Sep 2, 2026',
+      reason: 'Follow-up: dizziness episodes',
+      caregiverNotes: 'Blood pressure checked in-office, slightly low when standing. Doctor wants a home blood pressure log for two weeks before deciding on medication change.',
+      documents: [],
+      aiSummary: null,
+      approved: false,
+      shared: false,
+      medChangesConfirmed: false,
+      draftMedChanges: [],
+      draftFollowUps: [],
+      followUpNote: 'Sep 16, 2026',
+      generating: false,
+      error: null,
+    },
+  ],
+  tasks: [
+    { id:'t1', title:'Schedule 6-week diabetes follow-up', assignee:'Maria Carter', due:'Oct 9, 2026', status:'Not started', linkedVisit:'v1', overdue:false },
+    { id:'t2', title:'Book physical therapy consult', assignee:'Daniel Carter', due:'Aug 26, 2026', status:'Scheduled', linkedVisit:'v2', overdue:false },
+    { id:'t3', title:'Start home blood pressure log', assignee:'Maria Carter', due:'Sep 4, 2026', status:'Not started', linkedVisit:'v3', overdue:true },
+    { id:'t4', title:'Refill Meloxicam prescription', assignee:'Daniel Carter', due:'Sep 6, 2026', status:'Not started', linkedVisit:null, overdue:false },
+  ],
+  family: [
+    { name:'Maria Carter', role:'Primary Caregiver', initials:'MC' },
+    { name:'Daniel Carter', role:'Family Team', initials:'DC' },
+    { name:'Grace Carter-Lin', role:'Family Team', initials:'GC' },
+    { name:'Evelyn Carter', role:'Care Recipient', initials:'EC' },
+  ],
+  activity: [
+    { text: '<b>Maria</b> approved the AI summary for the Aug 28 visit', time: '2 days ago' },
+    { text: '<b>Daniel</b> marked "Book physical therapy consult" as Scheduled', time: '3 days ago' },
+    { text: '<b>Grace</b> logged Evelyn\'s morning Metformin dose', time: '4 days ago' },
+    { text: '<b>Maria</b> added a new visit note from Dr. Rowan', time: '1 week ago' },
+  ],
+  nextVisitId: 4,
+  nextTaskId: 5,
+  nextDoseId: 1,
+  nextMsgId: 5,
+  nextNoteId: 1,
+  nextMedId: 4,
+  doseLogs: [
+    { id:'d0', medId:'m1', medName:'Metformin', status:'Taken', time:'Sep 1, 8:02 AM', loggedBy:'Grace Carter-Lin' },
+  ],
+  familyNotes: [
+    { id:'fn0', author:'Grace Carter-Lin', text:"Evelyn mentioned she's been sleeping better this week — no more afternoon naps needed.", time:'Sep 2, 6:40 PM' },
+  ],
+  messages: {
+    group: [
+      { id:'msg1', sender:'Daniel Carter', text:"Just picked up Mom's Meloxicam refill.", time:'9:14 AM' },
+      { id:'msg2', sender:'Maria Carter', text:"Thank you! I'll update the task.", time:'9:20 AM' },
+    ],
+    'dm::Daniel Carter::Maria Carter': [
+      { id:'msg3', sender:'Maria Carter', text:"Can you call Dr. Rowan's office about the follow-up?", time:'Yesterday' },
+      { id:'msg4', sender:'Daniel Carter', text:'On it — will call this afternoon.', time:'Yesterday' },
+    ],
+  },
+};
+
+// Snapshot of the original fictional sample data, used by Reset Demo.
+const INITIAL_STATE = JSON.parse(JSON.stringify(state));
+
+const familyMembers = ['Maria Carter', 'Daniel Carter', 'Grace Carter-Lin'];
+
+// ---------------------------------------------------------------
+// Small helpers
+// ---------------------------------------------------------------
+function isPrimaryCaregiver() { return state.currentUser.role === 'Primary Caregiver'; }
+function linkedTasks(visitId) { return state.tasks.filter(t => t.linkedVisit === visitId); }
+function openTaskCount(visitId) { return linkedTasks(visitId).filter(t => t.status !== 'Completed').length; }
+function logActivity(text) { state.activity.unshift({ text, time: 'Just now' }); }
+function dmKey(a, b) {
+  const names = [a, b].sort();
+  return 'dm::' + names[0] + '::' + names[1];
+}
+function formatDate(iso) {
+  if (!iso) return '';
+  const d = new Date(iso + 'T00:00:00');
+  if (isNaN(d)) return iso;
+  return d.toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric' });
+}
+
+// ---------------------------------------------------------------
+// Rendering
+// ---------------------------------------------------------------
+function render() {
+  const app = document.getElementById('app');
+  app.innerHTML = `
+    <div class="demo-banner">Prototype Demonstration — Fictional Data Only</div>
+    ${renderTopbar()}
+    <main>${renderTab()}</main>
+    ${state.tab === 'visits' && !state.overlay && isPrimaryCaregiver() ? '<button class="fab" onclick="openOverlay(\'newVisit\')" aria-label="Add visit">+</button>' : ''}
+    ${renderTabbar()}
+    ${state.overlay ? renderOverlay() : ''}
+  `;
+  if (state.overlay && state.overlay.type === 'chat') {
+    const scrollEl = document.getElementById('chat-scroll');
+    if (scrollEl) scrollEl.scrollTop = scrollEl.scrollHeight;
+  }
+}
+
+function renderTopbar() {
+  return `
+    <div class="topbar">
+      <div class="brand">
+        <div class="brand-mark">CJ</div>
+        <div>
+          <div class="brand-name">CJ Legacy Care</div>
+          <div class="brand-sub">Caring for ${state.careRecipient.name.split(' ')[0]} · Viewing as ${state.currentUser.role}</div>
+        </div>
+      </div>
+      <button class="avatar-btn" onclick="openOverlay('profile')" aria-label="Care recipient profile">EC</button>
+    </div>
+  `;
+}
+
+function renderTabbar() {
+  const tabs = [
+    { id:'dashboard', icon:'⌂', label:'Dashboard' },
+    { id:'visits', icon:'🩺', label:'Visits' },
+    { id:'medications', icon:'💊', label:'Meds' },
+    { id:'family', icon:'👪', label:'Family' },
+    { id:'tasks', icon:'✓', label:'Tasks' },
+    { id:'chat', icon:'💬', label:'Chat' },
+  ];
+  return `
+    <nav class="tabbar">
+      ${tabs.map(t => `
+        <button class="${state.tab===t.id?'active':''}" onclick="setTab('${t.id}')">
+          <span class="tab-icon">${t.icon}</span>${t.label}
+        </button>
+      `).join('')}
+    </nav>
+  `;
+}
+
+function renderTab() {
+  if (state.tab === 'dashboard') return renderDashboard();
+  if (state.tab === 'visits') return renderVisits();
+  if (state.tab === 'medications') return renderMedications();
+  if (state.tab === 'family') return renderFamily();
+  if (state.tab === 'tasks') return renderTasks();
+  if (state.tab === 'chat') return renderChat();
+  return '';
+}
+
+function renderDashboard() {
+  const openTasks = state.tasks.filter(t => t.status !== 'Completed').length;
+  const nextMed = state.medications.slice().sort((a,b)=>a.refillDays-b.refillDays)[0];
+  const recent = state.visits.slice(-3).reverse();
+  return `
+    <div class="greeting">
+      <h1>Good afternoon, ${state.currentUser.name.split(' ')[0]}</h1>
+      <p>Here's how things stand for ${state.careRecipient.name} today.</p>
+    </div>
+
+    <div class="stat-row">
+      <div class="stat-card"><div class="num">${openTasks}</div><div class="label">Open tasks</div></div>
+      <div class="stat-card"><div class="num">${nextMed.refillDays}d</div><div class="label">${nextMed.name} refill</div></div>
+      <div class="stat-card"><div class="num">${state.visits.length}</div><div class="label">Visits logged</div></div>
+    </div>
+
+    <div class="section-heading">
+      <h2>Recent Office Visits</h2>
+      <button type="button" class="link" onclick="setTab('visits')">See all</button>
+    </div>
+    ${recent.map(renderVisitCard).join('')}
+  `;
+}
+
+function renderVisitCard(v) {
+  const restricted = !v.shared && !isPrimaryCaregiver();
+  const openTasks = openTaskCount(v.id);
+  const statusLabel = v.shared ? 'Approved' : (isPrimaryCaregiver() ? (v.approved ? 'Approving in progress' : 'Awaiting Review') : 'Awaiting Review');
+  return `
+    <div class="visit-card">
+      <div class="visit-card-top">
+        <div>
+          <div class="visit-provider">${v.provider}</div>
+          <div class="visit-date">${v.specialty} · ${v.date}</div>
+        </div>
+        <span class="status-pill ${v.shared ? 'status-approved' : 'status-review'}">${statusLabel}</span>
+      </div>
+      <div class="visit-reason">${v.reason}</div>
+      <div class="visit-summary">
+        ${v.shared
+          ? v.aiSummary
+          : (restricted
+              ? 'A caregiver is reviewing this visit. Details will appear here once it\'s shared.'
+              : (v.aiSummary ? 'Draft ready — open this visit to review and approve it.' : 'No draft yet — open this visit to get started.'))}
+      </div>
+      ${!restricted ? `
+      <div class="visit-meta-row">
+        <span><b>Med changes:</b> ${v.medChangesConfirmed ? (v.draftMedChanges.map(m=>m.name).join(', ') || 'None') : 'Pending confirmation'}</span>
+        <span><b>Follow-up:</b> ${v.followUpNote || '—'}</span>
+        <span><b>Open tasks:</b> ${openTasks}</span>
+      </div>` : ''}
+      <button type="button" class="view-visit-btn" onclick="openOverlay('visit', '${v.id}')">View Visit →</button>
+    </div>
+  `;
+}
+
+function renderVisits() {
+  return `
+    <div class="greeting"><h1>Office Visits</h1><p>All visit notes in one place.</p></div>
+    ${state.visits.slice().reverse().map(renderVisitCard).join('')}
+  `;
+}
+
+function renderMedications() {
+  return `
+    <div class="greeting"><h1>Medications</h1><p>${state.careRecipient.name}'s current prescriptions.</p></div>
+    ${state.medications.map(m => `
+      <div class="row-card">
+        <div class="row-icon" style="background:var(--plum-100);color:var(--plum-700);">💊</div>
+        <div class="row-main">
+          <div class="row-title">${m.name} — ${m.dose}</div>
+          <div class="row-sub">${m.freq}</div>
+        </div>
+        <span class="status-pill ${m.refillDays <= 5 ? 'status-review' : 'status-approved'}">${m.refillDays}d refill</span>
+      </div>
+    `).join('')}
+    <button class="btn-secondary" style="margin-top:8px;" onclick="openOverlay('addMedication')">Add Medication</button>
+    <button class="btn-secondary" style="margin-top:8px;" onclick="openOverlay('logDose')">Log a Dose</button>
+
+    <div class="section-heading"><h2>Recent Doses</h2></div>
+    ${state.doseLogs.length ? state.doseLogs.slice(0,5).map(d => `
+      <div class="row-card">
+        <div class="row-icon" style="background:${d.status==='Taken' ? 'var(--sage-100)' : 'var(--rose-100)'}; color:${d.status==='Taken' ? 'var(--sage)' : 'var(--rose)'};">${d.status==='Taken' ? '✓' : '×'}</div>
+        <div class="row-main">
+          <div class="row-title">${d.medName} — ${d.status}</div>
+          <div class="row-sub">${d.time} · logged by ${d.loggedBy}</div>
+        </div>
+      </div>
+    `).join('') : '<p class="empty-note">No doses logged yet.</p>'}
+  `;
+}
+
+function renderFamily() {
+  return `
+    <div class="greeting"><h1>Family Care Village</h1><p>Everyone helping care for ${state.careRecipient.name}.</p></div>
+    ${state.family.map(f => `
+      <div class="family-card">
+        <div class="family-avatar">${f.initials}</div>
+        <div class="row-main">
+          <div class="row-title">${f.name}${f.name===state.currentUser.name ? ' (You)' : ''}</div>
+        </div>
+        <span class="role-badge">${f.role}</span>
+      </div>
+    `).join('')}
+    <button class="btn-secondary" style="margin-top:10px;" onclick="openOverlay('inviteFamily')">Invite a Family Member</button>
+
+    <div class="section-heading"><h2>Recent Activity</h2></div>
+    <div class="row-card" style="display:block;">
+      ${state.activity.map(a => `<div class="activity-item">${a.text} <span style="opacity:0.7;">· ${a.time}</span></div>`).join('')}
+    </div>
+
+    <div class="section-heading"><h2>Family Notes</h2></div>
+    <p style="font-size:12.5px; color:var(--ink-muted); margin-top:-6px; margin-bottom:10px;">A shared space for anything worth passing along — not tied to a specific visit.</p>
+    ${state.familyNotes.length ? state.familyNotes.map(n => `
+      <div class="row-card" style="display:block;">
+        <div style="display:flex; justify-content:space-between; align-items:baseline;">
+          <div class="row-title">${n.author}${n.author===state.currentUser.name ? ' (You)' : ''}</div>
+          <div class="row-sub">${n.time}</div>
+        </div>
+        <p style="font-size:13.5px; margin-top:6px; line-height:1.5;">${n.text}</p>
+      </div>
+    `).join('') : '<p class="empty-note">No notes yet — add one below.</p>'}
+    <div class="field" style="margin-top:10px;">
+      <label for="fn-text">Add a note</label>
+      <textarea id="fn-text" placeholder="Share something with the family..."></textarea>
+    </div>
+    <button class="btn-primary" onclick="addFamilyNote()">Add Note</button>
+  `;
+}
+
+function renderTasks() {
+  const sorted = state.tasks.slice().sort((a,b) => (a.overdue===b.overdue)?0:(a.overdue?-1:1));
+  return `
+    <div class="greeting"><h1>Tasks</h1><p>Anyone on the family team can update a task's status.</p></div>
+    <p style="font-size:11.5px; color:var(--ink-muted); margin-top:-10px; margin-bottom:16px;">Demo only — "notifying" language below is illustrative. No real emails, texts, or push alerts are sent by this prototype.</p>
+    ${sorted.map(t => `
+      <div class="task-card">
+        <div class="task-top">
+          <div class="task-title">${t.title}</div>
+          <span class="status-pill ${t.status==='Completed'?'status-approved':'status-review'}">${t.status}</span>
+        </div>
+        <div class="task-meta">
+          Assigned to ${t.assignee} · Due ${t.due}
+          ${t.overdue ? '<span class="task-overdue"> · Overdue — notifying full family team</span>' : ''}
+        </div>
+        <select class="status-select" onchange="updateTaskStatus('${t.id}', this.value)" aria-label="Update status for ${t.title}">
+          <option value="Not started" ${t.status==='Not started'?'selected':''}>Not started</option>
+          <option value="Scheduled" ${t.status==='Scheduled'?'selected':''}>Scheduled</option>
+          <option value="Completed" ${t.status==='Completed'?'selected':''}>Completed</option>
+        </select>
+      </div>
+    `).join('')}
+  `;
+}
+
+// ---------------------------------------------------------------
+// Overlays (Visit Details, Profile, New Visit)
+// ---------------------------------------------------------------
+function renderOverlay() {
+  if (state.overlay.type === 'visit') return renderVisitDetail(state.overlay.id);
+  if (state.overlay.type === 'profile') return renderProfile();
+  if (state.overlay.type === 'newVisit') return renderNewVisitForm();
+  if (state.overlay.type === 'logDose') return renderLogDoseForm();
+  if (state.overlay.type === 'inviteFamily') return renderInviteFamilyForm();
+  if (state.overlay.type === 'chat') return renderChatOverlay(state.overlay.id);
+  if (state.overlay.type === 'addMedication') return renderAddMedicationForm();
+  if (state.overlay.type === 'newMessage') return renderNewMessageForm();
+  return '';
+}
+
+function renderChat() {
+  const others = state.family.filter(f => f.name !== state.currentUser.name && f.role !== 'Care Recipient');
+  const groupMsgs = state.messages.group || [];
+  const lastGroup = groupMsgs[groupMsgs.length - 1];
+  return `
+    <div class="greeting"><h1>Messages</h1><p>Chat with the Family Care Village.</p></div>
+    <p style="font-size:11.5px; color:var(--ink-muted); margin-top:-10px; margin-bottom:16px;">Demo messaging — messages stay in this browser session only and are never sent to a real messaging service.</p>
+
+    <button type="button" class="row-card" onclick="openOverlay('chat', 'group')">
+      <div class="row-icon" style="background:var(--plum-100); color:var(--plum-700);">👪</div>
+      <div class="row-main">
+        <div class="row-title">Family Care Village (Group)</div>
+        <div class="row-sub">${lastGroup ? `${lastGroup.sender.split(' ')[0]}: ${lastGroup.text}` : 'No messages yet'}</div>
+      </div>
+    </button>
+
+    <div class="section-heading">
+      <h2>Direct Messages</h2>
+      <button type="button" class="link" onclick="openOverlay('newMessage')">New Message</button>
+    </div>
+    ${others.map(f => {
+      const key = dmKey(state.currentUser.name, f.name);
+      const msgs = state.messages[key] || [];
+      const last = msgs[msgs.length - 1];
+      const preview = last ? `${last.sender === state.currentUser.name ? 'You: ' : ''}${last.text}` : 'No messages yet';
+      return `
+        <button type="button" class="row-card" onclick="openOverlay('chat', '${key}')">
+          <div class="family-avatar" style="width:38px;height:38px;font-size:13px;">${f.initials}</div>
+          <div class="row-main">
+            <div class="row-title">${f.name}</div>
+            <div class="row-sub">${preview}</div>
+          </div>
+        </button>
+      `;
+    }).join('')}
+  `;
+}
+
+function renderChatOverlay(key) {
+  const msgs = state.messages[key] || [];
+  let title;
+  if (key === 'group') {
+    title = 'Family Care Village';
+  } else {
+    const parts = key.split('::').slice(1);
+    title = parts.find(n => n !== state.currentUser.name) || parts[0];
+  }
+  return `
+    <div class="overlay">
+      <div class="overlay-header">
+        <button type="button" class="back" onclick="closeOverlay()" aria-label="Back">←</button>
+        <h2>${title}</h2>
+      </div>
+      <div class="overlay-body" id="chat-scroll" style="display:flex; flex-direction:column; gap:10px;">
+        ${msgs.length ? msgs.map(m => `
+          <div style="align-self:${m.sender===state.currentUser.name?'flex-end':'flex-start'}; max-width:78%;">
+            ${key==='group' && m.sender!==state.currentUser.name ? `<div style="font-size:10.5px; color:var(--ink-muted); margin-bottom:2px;">${m.sender}</div>` : ''}
+            <div style="background:${m.sender===state.currentUser.name?'var(--plum-800)':'var(--plum-100)'}; color:${m.sender===state.currentUser.name?'var(--ivory)':'var(--plum-950)'}; padding:9px 12px; border-radius:14px; font-size:13.5px; line-height:1.4;">${m.text}</div>
+            <div style="font-size:10px; color:var(--ink-muted); margin-top:2px; text-align:${m.sender===state.currentUser.name?'right':'left'};">${m.time}</div>
+          </div>
+        `).join('') : '<p class="empty-note">No messages yet — say hello.</p>'}
+      </div>
+      <div style="display:flex; gap:8px; padding:12px 18px calc(12px + env(safe-area-inset-bottom)); border-top:1px solid var(--line); background:var(--paper);">
+        <input id="chat-input" type="text" placeholder="Message..." autocomplete="off" aria-label="Type a message"
+          style="flex:1; padding:10px 14px; border-radius:20px; border:1px solid var(--line); font-family:inherit; font-size:14px;"
+          onkeydown="if(event.key==='Enter'){sendMessage('${key}')}" />
+        <button class="btn-primary" style="width:auto; padding:10px 20px; border-radius:20px;" onclick="sendMessage('${key}')">Send</button>
+      </div>
+    </div>
+  `;
+}
+
+function renderLogDoseForm() {
+  return `
+    <div class="overlay">
+      <div class="overlay-header">
+        <button type="button" class="back" onclick="closeOverlay()" aria-label="Back">←</button>
+        <h2>Log a Dose</h2>
+      </div>
+      <div class="overlay-body">
+        <div class="field">
+          <label for="ld-med">Medication</label>
+          <select id="ld-med">
+            ${state.medications.map(m => `<option value="${m.id}">${m.name} — ${m.dose}</option>`).join('')}
+          </select>
+        </div>
+        <div class="field">
+          <label for="ld-status">Status</label>
+          <select id="ld-status">
+            <option value="Taken">Taken</option>
+            <option value="Skipped">Skipped</option>
+          </select>
+        </div>
+        <button class="btn-primary" style="margin-top:8px;" onclick="logDose()">Save</button>
+      </div>
+    </div>
+  `;
+}
+
+function renderNewMessageForm() {
+  const others = state.family.filter(f => f.name !== state.currentUser.name && f.role !== 'Care Recipient');
+  return `
+    <div class="overlay">
+      <div class="overlay-header">
+        <button type="button" class="back" onclick="closeOverlay()" aria-label="Back">←</button>
+        <h2>New Message</h2>
+      </div>
+      <div class="overlay-body">
+        <div class="field">
+          <label for="nm-recipient">To</label>
+          <select id="nm-recipient">
+            ${others.map(f => `<option value="${f.name}">${f.name}</option>`).join('')}
+          </select>
+        </div>
+        <div class="field">
+          <label for="nm-text">Message</label>
+          <textarea id="nm-text" placeholder="Write your message..."></textarea>
+        </div>
+        <button class="btn-primary" style="margin-top:8px;" onclick="startNewMessage()">Send</button>
+      </div>
+    </div>
+  `;
+}
+
+function renderAddMedicationForm() {
+  return `
+    <div class="overlay">
+      <div class="overlay-header">
+        <button type="button" class="back" onclick="closeOverlay()" aria-label="Back">←</button>
+        <h2>Add Medication</h2>
+      </div>
+      <div class="overlay-body">
+        <div class="field">
+          <label for="am-name">Medication name</label>
+          <input id="am-name" type="text" placeholder="e.g. Atorvastatin" />
+        </div>
+        <div class="field">
+          <label for="am-dose">Dose</label>
+          <input id="am-dose" type="text" placeholder="e.g. 20mg" />
+        </div>
+        <div class="field">
+          <label for="am-freq">Frequency</label>
+          <input id="am-freq" type="text" placeholder="e.g. Once daily, evening" />
+        </div>
+        <div class="field">
+          <label for="am-refill">Days until refill needed</label>
+          <input id="am-refill" type="number" min="0" placeholder="e.g. 30" />
+        </div>
+        <button class="btn-primary" style="margin-top:8px;" onclick="addMedication()">Save Medication</button>
+      </div>
+    </div>
+  `;
+}
+
+function renderInviteFamilyForm() {
+  return `
+    <div class="overlay">
+      <div class="overlay-header">
+        <button type="button" class="back" onclick="closeOverlay()" aria-label="Back">←</button>
+        <h2>Invite a Family Member</h2>
+      </div>
+      <div class="overlay-body">
+        <div class="field">
+          <label for="inv-name">Name</label>
+          <input id="inv-name" type="text" placeholder="e.g. Sam Carter" />
+        </div>
+        <div class="field">
+          <label for="inv-contact">Email or phone</label>
+          <input id="inv-contact" type="text" placeholder="e.g. sam@example.com" />
+        </div>
+        <div class="field">
+          <label for="inv-role">Role</label>
+          <select id="inv-role">
+            <option value="Family Team">Family Team — view records, log activity, update tasks</option>
+            <option value="Primary Caregiver">Primary Caregiver — full edit access</option>
+          </select>
+        </div>
+        <p style="font-size:12.5px; color:var(--ink-muted); line-height:1.5;">Static demo only: this adds a row locally so you can see the flow — no real invite email is sent.</p>
+        <button class="btn-primary" style="margin-top:8px;" onclick="inviteFamilyMember()">Send Invite</button>
+      </div>
+    </div>
+  `;
+}
+
+function renderVisitDetail(id) {
+  const v = state.visits.find(x => x.id === id);
+  if (!v) return '<div class="overlay"><div class="overlay-body">Visit not found.</div></div>';
+  const caregiver = isPrimaryCaregiver();
+  const tasksForVisit = linkedTasks(v.id);
+  const tasksBlock = tasksForVisit.length ? `
+    <div class="divider-label">Tasks from this Visit</div>
+    ${tasksForVisit.map(t => `
+      <div class="task-card">
+        <div class="task-title">${t.title}</div>
+        <div class="task-meta">${t.assignee} · Due ${t.due} · ${t.status}</div>
+      </div>
+    `).join('')}
+  ` : '';
+
+  if (!caregiver && !v.shared) {
+    return `
+      <div class="overlay">
+        <div class="overlay-header"><button type="button" class="back" onclick="closeOverlay()" aria-label="Back">←</button><h2>Visit Details</h2></div>
+        <div class="overlay-body">
+          <h1 style="font-size:19px;">${v.reason}</h1>
+          <p style="color:var(--ink-muted); font-size:13px; margin-top:4px;">${v.provider}, ${v.specialty} · ${v.date}</p>
+          <div class="ai-summary-box" style="background:var(--amber-100); color:#6B4E1E; margin-top:16px;">
+            <div class="ai-summary-label" style="color:#7A5A22;">AWAITING CAREGIVER REVIEW</div>
+            A caregiver is still reviewing this visit. You'll be notified as soon as it's shared with the Family Care Village.
+          </div>
+          ${tasksBlock}
+        </div>
+      </div>
+    `;
+  }
+
+  return `
+    <div class="overlay">
+      <div class="overlay-header">
+        <button type="button" class="back" onclick="closeOverlay()" aria-label="Back">←</button>
+        <h2>Visit Details</h2>
+      </div>
+      <div class="overlay-body">
+        <h1 style="font-size:19px;">${v.reason}</h1>
+        <p style="color:var(--ink-muted); font-size:13px; margin-top:4px;">${v.provider}, ${v.specialty} · ${v.date}</p>
+        <span class="status-pill ${v.shared ? 'status-approved' : 'status-review'}" style="margin-top:10px; display:inline-block;">
+          ${v.shared ? 'Shared with Family' : (caregiver ? 'Caregiver review in progress' : 'Awaiting Review')}
+        </span>
+
+        ${caregiver ? renderCaregiverWorkflow(v) : renderSharedSummaryOnly(v)}
+        ${tasksBlock}
+      </div>
+    </div>
+  `;
+}
+
+function renderSharedSummaryOnly(v) {
+  return `
+    <div class="divider-label">Visit Notes Made Clear</div>
+    <div class="disclaimer">
+      <span class="mark">ⓘ</span>
+      <span>This summary was written to make the visit easier to understand. It does not diagnose or recommend treatment changes, and it's been reviewed and approved by a caregiver.</span>
+    </div>
+    <div class="ai-summary-box">
+      <div class="ai-summary-label">APPROVED SUMMARY</div>
+      ${v.aiSummary}
+    </div>
+
+    <div class="divider-label">Medication Changes</div>
+    ${v.draftMedChanges.length ? v.draftMedChanges.map(m => `
+      <div class="row-card"><div class="row-main"><div class="row-title">${m.name}</div><div class="row-sub">${m.change}</div></div></div>
+    `).join('') : '<p class="empty-note">No medication changes from this visit.</p>'}
+  `;
+}
+
+function renderCaregiverWorkflow(v) {
+  const hasDraft = !!v.aiSummary;
+  return `
+    <div class="divider-label">Notes &amp; Documents</div>
+    ${v.documents.length ? v.documents.map(d => `
+      <div class="row-card">
+        <div class="row-icon" style="background:var(--plum-100); color:var(--plum-700);">${d.kind==='image'?'🖼️':(d.kind==='pdf'?'📄':'📝')}</div>
+        <div class="row-main"><div class="row-title">${d.name}</div><div class="row-sub">${d.kind==='image'?'Photo':(d.kind==='pdf'?'PDF document':'Text note')}</div></div>
+      </div>
+    `).join('') : '<p class="empty-note">No documents uploaded yet.</p>'}
+    <input type="file" id="file-${v.id}" style="display:none" multiple accept="image/*,application/pdf,text/plain" onchange="handleFileUpload('${v.id}', this)" />
+    <button type="button" class="upload-box" onclick="document.getElementById('file-${v.id}').click()">📎 Tap to take a photo or upload visit notes / discharge paperwork<br><span style="font-size:10.5px;">Demo only — do not upload real documents. Nothing is transmitted, analyzed, or stored; the file stays in your browser for this session only.</span></button>
+
+    <div class="field" style="margin-top:14px;">
+      <label for="notes-${v.id}">Your notes (caregiver)</label>
+      <textarea id="notes-${v.id}" placeholder="What happened at the visit, in your own words...">${v.caregiverNotes}</textarea>
+    </div>
+    <button class="btn-secondary" onclick="saveCaregiverNotes('${v.id}')">Save Notes</button>
+
+    <div class="divider-label">Visit Notes Made Clear</div>
+    <div class="disclaimer">
+      <span class="mark">ⓘ</span>
+      <span>This summary is meant to help make visit notes easier to read. It does not diagnose, does not recommend treatment changes, and is not a substitute for the provider's own instructions. In this static prototype, the draft below is a <b>simulated placeholder</b> — no live AI service is called and no data leaves your browser.</span>
+    </div>
+
+    ${v.error ? `<p style="color:var(--rose); font-size:12.5px; margin-bottom:8px;">${v.error}</p>` : ''}
+
+    ${!hasDraft ? `
+      <button class="btn-primary" ${v.generating ? 'disabled' : ''} onclick="generateDraft('${v.id}')">
+        ${v.generating ? 'Generating draft…' : 'Generate Plain-Language Draft'}
+      </button>
+    ` : (v.approved ? `
+      <div class="ai-summary-box">
+        <div class="ai-summary-label">APPROVED SUMMARY</div>
+        ${v.aiSummary}
+      </div>
+    ` : `
+      <div class="field">
+        <label for="draft-${v.id}">Draft summary — edit as needed before approving</label>
+        <textarea id="draft-${v.id}" rows="5">${v.aiSummary}</textarea>
+      </div>
+      <button class="btn-secondary" ${v.generating ? 'disabled' : ''} onclick="generateDraft('${v.id}')">${v.generating ? 'Regenerating…' : 'Regenerate Draft'}</button>
+      <button class="btn-primary" style="margin-top:10px;" onclick="approveDraft('${v.id}')">Approve Summary</button>
+    `)}
+
+    ${hasDraft ? renderMedChangesSection(v) : ''}
+    ${hasDraft ? renderFollowUpsSection(v) : ''}
+
+    ${(v.approved && v.medChangesConfirmed) ? `
+      <div class="divider-label">Share with Family</div>
+      ${v.shared ? `
+        <div class="ai-summary-box" style="background:var(--sage-100); color:#3E5A43;">
+          ✓ Shared with the Family Care Village — the approved summary, confirmed medication changes, and any tasks are now visible to the family team.
+        </div>
+      ` : `
+        <p style="font-size:12.5px; color:var(--ink-muted); margin-bottom:10px;">Only what's approved and confirmed above will become visible to the family team.</p>
+        <button class="btn-primary" onclick="shareVisit('${v.id}')">Share with Family Care Village</button>
+      `}
+    ` : ''}
+  `;
+}
+
+function renderMedChangesSection(v) {
+  if (v.medChangesConfirmed) {
+    return `
+      <div class="divider-label">Medication Changes — Confirmed</div>
+      ${v.draftMedChanges.length ? v.draftMedChanges.map(m => `
+        <div class="row-card"><div class="row-main"><div class="row-title">${m.name}</div><div class="row-sub">${m.change}</div></div></div>
+      `).join('') : '<p class="empty-note">No medication changes from this visit.</p>'}
+    `;
+  }
+  if (!v.draftMedChanges.length) {
+    return `
+      <div class="divider-label">Medication Changes</div>
+      <p class="empty-note">No medication changes were identified in this visit's notes.</p>
+      <button class="btn-secondary" onclick="confirmMedChanges('${v.id}')">Confirm — No Changes</button>
+    `;
+  }
+  return `
+    <div class="divider-label">Confirm Medication Changes</div>
+    <p style="font-size:12px; color:var(--ink-muted); margin-bottom:8px;">Extracted from the visit notes — review and edit before confirming.</p>
+    ${v.draftMedChanges.map((m,i) => `
+      <div class="row-card" style="align-items:flex-start;">
+        <input type="checkbox" ${m.checked !== false ? 'checked' : ''} onchange="toggleMedChange('${v.id}', ${i}, this.checked)" style="margin-top:4px; width:18px; height:18px; flex-shrink:0;" aria-label="Include ${m.name} in confirmed medication changes" />
+        <div class="row-main">
+          <input type="text" value="${m.name}" oninput="editMedChange('${v.id}', ${i}, 'name', this.value)" style="font-weight:600; font-size:13.5px; border:none; background:none; width:100%; padding:2px 0; font-family:inherit; color:var(--plum-950);" aria-label="Medication name" />
+          <input type="text" value="${m.change}" oninput="editMedChange('${v.id}', ${i}, 'change', this.value)" style="font-size:12.5px; color:var(--ink-muted); border:none; background:none; width:100%; padding:2px 0; font-family:inherit;" aria-label="Description of the medication change" />
+        </div>
+      </div>
+    `).join('')}
+    <button class="btn-primary" style="margin-top:6px;" onclick="confirmMedChanges('${v.id}')">Confirm Medication Changes</button>
+  `;
+}
+
+function renderFollowUpsSection(v) {
+  if (!v.draftFollowUps.length) {
+    return `<div class="divider-label">Follow-Up Actions</div><p class="empty-note">No follow-up actions were identified in this visit's notes.</p>`;
+  }
+  const allCreated = v.draftFollowUps.every(f => f.taskCreated);
+  if (allCreated) {
+    return `
+      <div class="divider-label">Follow-Up Tasks — Created</div>
+      ${v.draftFollowUps.map(f => `
+        <div class="row-card"><div class="row-main"><div class="row-title">${f.description}</div><div class="row-sub">Assigned to ${f.assignee} · ${f.dueDate ? formatDate(f.dueDate) : f.timeframe}</div></div></div>
+      `).join('')}
+    `;
+  }
+  return `
+    <div class="divider-label">Convert Follow-Up Instructions into Tasks</div>
+    <p style="font-size:12px; color:var(--ink-muted); margin-bottom:8px;">Extracted from the visit — choose who's responsible and when it's due.</p>
+    ${v.draftFollowUps.map((f,i) => f.taskCreated ? `
+      <div class="row-card"><div class="row-main"><div class="row-title">${f.description}</div><div class="row-sub">Task created — assigned to ${f.assignee}</div></div></div>
+    ` : `
+      <div class="task-card">
+        <label style="display:flex; align-items:flex-start; gap:8px; cursor:pointer;">
+          <input type="checkbox" ${f.selected !== false ? 'checked' : ''} onchange="toggleFollowUp('${v.id}', ${i}, this.checked)" style="width:18px; height:18px; margin-top:2px; flex-shrink:0;" />
+          <span>
+            <span class="task-title">${f.description}</span><br>
+            <span class="task-meta">Suggested timeframe: ${f.timeframe || 'not specified'}</span>
+          </span>
+        </label>
+        <div class="field" style="margin-top:10px; margin-bottom:6px;">
+          <label for="fu-assignee-${v.id}-${i}">Assign to</label>
+          <select id="fu-assignee-${v.id}-${i}" onchange="editFollowUp('${v.id}', ${i}, 'assignee', this.value)">
+            ${familyMembers.map(name => `<option value="${name}" ${f.assignee===name?'selected':''}>${name}</option>`).join('')}
+          </select>
+        </div>
+        <div class="field" style="margin-bottom:0;">
+          <label for="fu-duedate-${v.id}-${i}">Due date</label>
+          <input id="fu-duedate-${v.id}-${i}" type="date" value="${f.dueDate}" oninput="editFollowUp('${v.id}', ${i}, 'dueDate', this.value)" />
+        </div>
+      </div>
+    `).join('')}
+    <button class="btn-primary" style="margin-top:6px;" onclick="createTasksFromFollowUps('${v.id}')">Create Tasks</button>
+  `;
+}
+
+function renderProfile() {
+  const c = state.careRecipient;
+  return `
+    <div class="overlay">
+      <div class="overlay-header">
+        <button type="button" class="back" onclick="closeOverlay()" aria-label="Back">←</button>
+        <h2>Care Recipient Profile</h2>
+      </div>
+      <div class="overlay-body">
+        <div style="display:flex; align-items:center; gap:14px;">
+          <div class="family-avatar" style="width:56px;height:56px;font-size:18px;">EC</div>
+          <div>
+            <h1 style="font-size:19px;">${c.name}</h1>
+            <p style="color:var(--ink-muted); font-size:13px; margin-top:2px;">${c.dob}</p>
+          </div>
+        </div>
+
+        <div class="profile-grid">
+          <div class="profile-item"><div class="k">PRIMARY PHYSICIAN</div><div class="v">${c.primaryPhysician}</div></div>
+          <div class="profile-item"><div class="k">ALLERGIES</div><div class="v">${c.allergies}</div></div>
+          <div class="profile-item" style="grid-column:span 2;"><div class="k">CONDITIONS</div><div class="v">${c.conditions}</div></div>
+          <div class="profile-item" style="grid-column:span 2;"><div class="k">EMERGENCY CONTACT</div><div class="v">${c.emergencyContact}</div></div>
+        </div>
+
+        <div class="divider-label">Your Access</div>
+        <div class="row-card">
+          <div class="row-icon" style="background:var(--plum-100);color:var(--plum-700);">👤</div>
+          <div class="row-main">
+            <div class="row-title">${state.currentUser.name}</div>
+            <div class="row-sub">${state.currentUser.role} · ${isPrimaryCaregiver() ? 'Full edit access' : 'View records & update tasks'}</div>
+          </div>
+        </div>
+        <button class="btn-secondary" style="margin-top:10px;" onclick="switchRole()">
+          ${isPrimaryCaregiver() ? 'Switch demo view to Family Team (no real login)' : 'Switch demo view back to Primary Caregiver'}
+        </button>
+
+        <div class="lock-note">
+          <span style="font-size:15px;">🔒</span>
+          <span><b>User roles &amp; security:</b> In a connected version of this app, care data would only be visible to invited family team members, enforced by real authentication and server-side access rules. <b>This static prototype has no real login, database, or server.</b> The role switch above and every permission you see are <b>simulated for demonstration only and are not production security controls.</b></span>
+        </div>
+
+        <div class="divider-label">Demo Controls</div>
+        <p style="font-size:12.5px; color:var(--ink-muted); line-height:1.6;">Everything you add or change in this prototype — visits, tasks, messages, notes, medications — lives only in this browser tab. <b>Refreshing or closing this page erases it</b> and restores the original fictional sample data automatically. You can also reset it manually at any time:</p>
+        <button class="btn-secondary" onclick="resetDemo()">↺ Reset Demo to Sample Data</button>
+      </div>
+    </div>
+  `;
+}
+
+function renderNewVisitForm() {
+  return `
+    <div class="overlay">
+      <div class="overlay-header">
+        <button type="button" class="back" onclick="closeOverlay()" aria-label="Back">←</button>
+        <h2>New Office Visit</h2>
+      </div>
+      <div class="overlay-body">
+        <div class="field"><label for="nv-provider">Provider name</label><input id="nv-provider" type="text" placeholder="e.g. Dr. Aisha Rowan" /></div>
+        <div class="field"><label for="nv-specialty">Specialty</label><input id="nv-specialty" type="text" placeholder="e.g. Internal Medicine" /></div>
+        <div class="field"><label for="nv-date">Visit date</label><input id="nv-date" type="date" /></div>
+        <div class="field"><label for="nv-reason">Reason for visit</label><input id="nv-reason" type="text" placeholder="e.g. Quarterly diabetes check-in" /></div>
+        <div class="field"><label for="nv-followup">Next appointment date, if known (optional)</label><input id="nv-followup" type="text" placeholder="e.g. Oct 9, 2026" /></div>
+        <p style="font-size:12.5px; color:var(--ink-muted); line-height:1.5;">After you save, you can upload visit notes or discharge paperwork and generate a plain-language draft from the visit's page.</p>
+        <button class="btn-primary" style="margin-top:8px;" onclick="saveNewVisit()">Save Appointment</button>
+      </div>
+    </div>
+  `;
+}
+
+// ---------------------------------------------------------------
+// Actions
+// ---------------------------------------------------------------
+function setTab(t) { state.tab = t; state.overlay = null; render(); window.scrollTo(0,0); }
+function openOverlay(type, id) { state.overlay = { type, id }; render(); }
+function closeOverlay() { state.overlay = null; render(); }
+
+function resetDemo() {
+  const confirmed = window.confirm('Reset the demo? This restores the original fictional sample data and discards anything you\'ve added or changed.');
+  if (!confirmed) return;
+  const fresh = JSON.parse(JSON.stringify(INITIAL_STATE));
+  Object.keys(state).forEach(k => delete state[k]);
+  Object.assign(state, fresh);
+  state.tab = 'dashboard';
+  state.overlay = null;
+  render();
+}
+
+function switchRole() {
+  state.currentUser = isPrimaryCaregiver()
+    ? { name:'Daniel Carter', role:'Family Team' }
+    : { name:'Maria Carter', role:'Primary Caregiver' };
+  state.tab = 'dashboard';
+  state.overlay = null;
+  render();
+}
+
+function updateTaskStatus(id, value) {
+  const t = state.tasks.find(x => x.id === id);
+  if (t) { t.status = value; if (value !== 'Not started') t.overdue = false; }
+  render();
+}
+
+function logDose() {
+  const medId = document.getElementById('ld-med').value;
+  const status = document.getElementById('ld-status').value;
+  const med = state.medications.find(m => m.id === medId);
+  if (!med) return;
+  const time = new Date().toLocaleString('en-US', { month:'short', day:'numeric', hour:'numeric', minute:'2-digit' });
+  state.doseLogs.unshift({
+    id: 'd' + state.nextDoseId++,
+    medId, medName: med.name, status, time,
+    loggedBy: state.currentUser.name,
+  });
+  logActivity(`<b>${state.currentUser.name.split(' ')[0]}</b> logged ${med.name} as ${status.toLowerCase()}`);
+  closeOverlay();
+}
+
+function sendMessage(key) {
+  const input = document.getElementById('chat-input');
+  const text = input ? input.value.trim() : '';
+  if (!text) return;
+  if (!state.messages[key]) state.messages[key] = [];
+  const time = new Date().toLocaleString('en-US', { hour:'numeric', minute:'2-digit' });
+  state.messages[key].push({ id: 'msg' + state.nextMsgId++, sender: state.currentUser.name, text, time });
+  if (key === 'group') {
+    logActivity(`<b>${state.currentUser.name.split(' ')[0]}</b> sent a message to the Family Care Village`);
+  }
+  openOverlay('chat', key);
+}
+
+function startNewMessage() {
+  const recipient = document.getElementById('nm-recipient').value;
+  const text = document.getElementById('nm-text').value.trim();
+  if (!recipient || !text) {
+    alert('Please choose a recipient and write a message.');
+    return;
+  }
+  const key = dmKey(state.currentUser.name, recipient);
+  if (!state.messages[key]) state.messages[key] = [];
+  const time = new Date().toLocaleString('en-US', { hour:'numeric', minute:'2-digit' });
+  state.messages[key].push({ id: 'msg' + state.nextMsgId++, sender: state.currentUser.name, text, time });
+  openOverlay('chat', key);
+}
+
+function addMedication() {
+  const name = document.getElementById('am-name').value.trim();
+  const dose = document.getElementById('am-dose').value.trim();
+  const freq = document.getElementById('am-freq').value.trim();
+  const refillDays = parseInt(document.getElementById('am-refill').value, 10);
+
+  if (!name || !dose || !freq) {
+    alert('Please fill in the medication name, dose, and frequency.');
+    return;
+  }
+
+  state.medications.push({
+    id: 'm' + state.nextMedId++,
+    name, dose, freq,
+    refillDays: isNaN(refillDays) ? 30 : refillDays,
+  });
+  logActivity(`<b>${state.currentUser.name.split(' ')[0]}</b> added ${name} to ${state.careRecipient.name}'s medications`);
+  closeOverlay();
+  setTab('medications');
+}
+
+function addFamilyNote() {
+  const el = document.getElementById('fn-text');
+  const text = el ? el.value.trim() : '';
+  if (!text) return;
+  const time = new Date().toLocaleString('en-US', { month:'short', day:'numeric', hour:'numeric', minute:'2-digit' });
+  state.familyNotes.unshift({ id: 'fn' + state.nextNoteId++, author: state.currentUser.name, text, time });
+  logActivity(`<b>${state.currentUser.name.split(' ')[0]}</b> added a family note`);
+  render();
+}
+
+function inviteFamilyMember() {
+  const name = document.getElementById('inv-name').value.trim();
+  const contact = document.getElementById('inv-contact').value.trim();
+  const role = document.getElementById('inv-role').value;
+
+  if (!name || !contact) {
+    alert('Please enter a name and an email or phone number.');
+    return;
+  }
+
+  const initials = name.split(' ').filter(Boolean).map(p => p[0].toUpperCase()).slice(0,2).join('');
+  state.family.push({ name, role, initials: initials || '?' });
+  logActivity(`<b>${state.currentUser.name.split(' ')[0]}</b> invited ${name} to the Family Care Village as ${role}`);
+  closeOverlay();
+  setTab('family');
+}
+
+// Step 1: create and save an appointment
+function saveNewVisit() {
+  const provider = document.getElementById('nv-provider').value.trim();
+  const specialty = document.getElementById('nv-specialty').value.trim();
+  const date = document.getElementById('nv-date').value;
+  const reason = document.getElementById('nv-reason').value.trim();
+  const followUpNote = document.getElementById('nv-followup').value.trim();
+
+  if (!provider || !reason || !date) {
+    alert('Please fill in at least the provider, date, and reason for the visit.');
+    return;
+  }
+
+  const id = 'v' + state.nextVisitId++;
+  state.visits.push({
+    id, provider, specialty: specialty || 'General', date: formatDate(date),
+    reason, caregiverNotes: '', documents: [],
+    aiSummary: null, draftMedChanges: [], draftFollowUps: [],
+    medChangesConfirmed: false, approved: false, shared: false,
+    followUpNote: followUpNote || '—', generating: false, error: null,
+  });
+  logActivity(`<b>${state.currentUser.name.split(' ')[0]}</b> saved a new visit with ${provider}`);
+  openOverlay('visit', id);
+}
+
+// Step 2: upload notes or discharge paperwork
+function handleFileUpload(id, inputEl) {
+  const files = Array.from(inputEl.files || []);
+  files.forEach(file => {
+    const reader = new FileReader();
+    if (file.type.startsWith('image/')) {
+      reader.onload = () => {
+        const base64 = String(reader.result).split(',')[1];
+        addDocument(id, { name: file.name, kind: 'image', mediaType: file.type, data: base64 });
+      };
+      reader.readAsDataURL(file);
+    } else if (file.type === 'application/pdf') {
+      reader.onload = () => {
+        const base64 = String(reader.result).split(',')[1];
+        addDocument(id, { name: file.name, kind: 'pdf', data: base64 });
+      };
+      reader.readAsDataURL(file);
+    } else {
+      reader.onload = () => {
+        addDocument(id, { name: file.name, kind: 'text', data: String(reader.result).slice(0, 6000) });
+      };
+      reader.readAsText(file);
+    }
+  });
+}
+function addDocument(id, doc) {
+  const v = state.visits.find(x => x.id === id);
+  if (v) v.documents.push(doc);
+  openOverlay('visit', id);
+}
+
+function saveCaregiverNotes(id) {
+  const v = state.visits.find(x => x.id === id);
+  const el = document.getElementById('notes-' + id);
+  if (v && el) v.caregiverNotes = el.value;
+  openOverlay('visit', id);
+}
+
+// Step 3: generate a plain-language draft
+function generateDraft(id) {
+  // STATIC DEMO ONLY: this prototype does not call any live AI service.
+  // No network request is made and no API key is present anywhere in this file.
+  const v = state.visits.find(x => x.id === id);
+  if (!v) return;
+  if (!v.caregiverNotes.trim() && v.documents.length === 0) {
+    v.error = 'Add your notes or upload a document before generating a draft.';
+    openOverlay('visit', id);
+    return;
+  }
+  v.error = null;
+  v.generating = true;
+  openOverlay('visit', id);
+
+  // Brief delay only to preserve the loading-state UX — no network call happens here.
+  setTimeout(() => {
+    const noteExcerpt = v.caregiverNotes ? v.caregiverNotes.trim().slice(0, 200) : null;
+    v.aiSummary = `[Simulated demo output — no live AI service was called] This is a placeholder plain-language draft for the ${v.reason} visit with ${v.provider}. ${noteExcerpt ? `Your notes were: "${noteExcerpt}${v.caregiverNotes.length > 200 ? '…' : ''}"` : 'No caregiver notes were entered, so this text is a static example.'} In a connected version of this app, this section would contain an AI-written summary of the visit for caregiver review.`;
+    v.draftMedChanges = [
+      { id: `${v.id}-mc0`, name: 'Example Medication', change: 'Sample change description — static demo placeholder, not extracted from real data', checked: true },
+    ];
+    v.draftFollowUps = [
+      { id: `${v.id}-fu0`, description: 'Example follow-up action — static demo placeholder', timeframe: '2 weeks', assignee: familyMembers[0], dueDate: '', selected: true, taskCreated: false },
+    ];
+    v.approved = false;
+    v.medChangesConfirmed = false;
+    v.shared = false;
+    v.generating = false;
+    openOverlay('visit', id);
+  }, 500);
+}
+
+// Step 4: caregiver corrects and approves the draft
+function approveDraft(id) {
+  const v = state.visits.find(x => x.id === id);
+  const el = document.getElementById('draft-' + id);
+  if (v && el) v.aiSummary = el.value;
+  if (v) v.approved = true;
+  logActivity(`<b>${state.currentUser.name.split(' ')[0]}</b> approved the visit summary for ${v.date}`);
+  openOverlay('visit', id);
+}
+
+// Step 5: confirm extracted medication changes
+function toggleMedChange(id, i, checked) {
+  const v = state.visits.find(x => x.id === id);
+  v.draftMedChanges[i].checked = checked;
+}
+function editMedChange(id, i, field, value) {
+  const v = state.visits.find(x => x.id === id);
+  v.draftMedChanges[i][field] = value;
+}
+function confirmMedChanges(id) {
+  const v = state.visits.find(x => x.id === id);
+  v.draftMedChanges = v.draftMedChanges.filter(m => m.checked !== false);
+  v.medChangesConfirmed = true;
+  logActivity(`<b>${state.currentUser.name.split(' ')[0]}</b> confirmed medication changes for the ${v.date} visit`);
+  openOverlay('visit', id);
+}
+
+// Step 6: convert follow-up instructions into tasks
+function toggleFollowUp(id, i, checked) {
+  const v = state.visits.find(x => x.id === id);
+  v.draftFollowUps[i].selected = checked;
+}
+function editFollowUp(id, i, field, value) {
+  const v = state.visits.find(x => x.id === id);
+  v.draftFollowUps[i][field] = value;
+}
+function createTasksFromFollowUps(id) {
+  const v = state.visits.find(x => x.id === id);
+  v.draftFollowUps.forEach(f => {
+    if (f.selected === false || f.taskCreated) return;
+    const taskId = 't' + state.nextTaskId++;
+    state.tasks.push({
+      id: taskId,
+      title: f.description,
+      assignee: f.assignee,
+      due: f.dueDate ? formatDate(f.dueDate) : (f.timeframe || 'No date set'),
+      status: 'Not started',
+      linkedVisit: v.id,
+      overdue: false,
+    });
+    f.taskCreated = true;
+  });
+  logActivity(`<b>${state.currentUser.name.split(' ')[0]}</b> created follow-up tasks from the ${v.date} visit`);
+  openOverlay('visit', id);
+}
+
+// Step 7: share only approved information with the Family Care Village
+function shareVisit(id) {
+  const v = state.visits.find(x => x.id === id);
+  v.shared = true;
+  logActivity(`<b>${state.currentUser.name.split(' ')[0]}</b> shared the ${v.date} visit with the Family Care Village`);
+  openOverlay('visit', id);
+}
+
+render();
+
+</script>
+</body>
+</html>
