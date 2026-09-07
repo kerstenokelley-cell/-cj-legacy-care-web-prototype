@@ -2253,10 +2253,45 @@ function renderNewVisitForm() {
 // ---------------------------------------------------------------
 // Actions
 // ---------------------------------------------------------------
-function setTab(t) { state.tab = t; state.overlay = null; state.desktopMoreOpen = false; render(); window.scrollTo(0,0); }
+// ---------------------------------------------------------------
+// Browser history integration — makes the native Back/Forward
+// buttons work correctly between screens, without any backend or
+// page reload. Every real screen change (tab switch, opening or
+// closing an overlay) pushes one history entry; transient UI state
+// (menus, checkboxes, form typing) does not.
+// ---------------------------------------------------------------
+function historyHash() {
+  const parts = [state.tab];
+  if (state.overlay) {
+    parts.push(state.overlay.type);
+    if (state.overlay.id !== null && state.overlay.id !== undefined) parts.push(String(state.overlay.id));
+  }
+  return '#' + parts.map(encodeURIComponent).join('/');
+}
+function pushHistoryState() {
+  history.pushState({ tab: state.tab, overlay: state.overlay }, '', historyHash());
+}
+function replaceHistoryState() {
+  history.replaceState({ tab: state.tab, overlay: state.overlay }, '', historyHash());
+}
+
+function setTab(t) {
+  state.tab = t; state.overlay = null; state.desktopMoreOpen = false;
+  pushHistoryState();
+  render();
+  window.scrollTo(0,0);
+}
 function toggleDesktopMore() { state.desktopMoreOpen = !state.desktopMoreOpen; render(); }
-function openOverlay(type, id) { state.overlay = { type, id }; render(); }
-function closeOverlay() { state.overlay = null; render(); }
+function openOverlay(type, id) {
+  state.overlay = { type, id };
+  pushHistoryState();
+  render();
+}
+function closeOverlay() {
+  state.overlay = null;
+  pushHistoryState();
+  render();
+}
 
 function selectCupLevel(level) {
   const data = currentCupData();
@@ -2456,6 +2491,7 @@ function resetDemo() {
   Object.assign(state, fresh);
   state.tab = 'dashboard';
   state.overlay = null;
+  pushHistoryState();
   render();
 }
 
@@ -2465,6 +2501,7 @@ function switchRole() {
     : { name:'Maria Carter', role:'Primary Caregiver' };
   state.tab = 'dashboard';
   state.overlay = null;
+  pushHistoryState();
   render();
 }
 
@@ -2733,6 +2770,25 @@ document.addEventListener('click', function (e) {
     render();
   }
 });
+
+// Native Back/Forward button support: restore the screen recorded in
+// history.state, or fall back to the dashboard if there is none (e.g. the
+// user went back past the first screen this session recorded).
+window.addEventListener('popstate', function (e) {
+  if (e.state) {
+    state.tab = e.state.tab;
+    state.overlay = e.state.overlay;
+  } else {
+    state.tab = 'dashboard';
+    state.overlay = null;
+  }
+  state.desktopMoreOpen = false;
+  render();
+});
+
+// Establish a well-defined starting point in browser history for this
+// session, so the very first Back press has something sensible to land on.
+replaceHistoryState();
 
 render();
 
