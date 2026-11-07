@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Advance Care Planning | CJ Legacy Care</title>
+<style>
+:root{font-family:system-ui,-apple-system,Segoe UI,sans-serif;color:#29213a;background:#f7f4fb}*{box-sizing:border-box}body{margin:0}.wrap{max-width:640px;margin:auto;padding:22px 18px 70px}.top{display:flex;align-items:center;justify-content:space-between;gap:12px}.brand{font-weight:800;color:#65318e}.back{color:#65318e;font-weight:650;text-decoration:none}.banner{background:#fff3cf;color:#6a4a00;padding:11px;border-radius:10px;font-size:13px;margin:18px 0}.hero{background:linear-gradient(135deg,#6a3695,#4f247e);color:white;border-radius:18px;padding:24px 20px}.hero h1{font-size:28px;line-height:1.14;margin:10px 0}.hero p{line-height:1.5}.card{background:#fff;border:1px solid #e4dbea;border-radius:16px;padding:20px;margin-top:16px;box-shadow:0 2px 8px #26153c0a}.card h2{font-size:20px;margin:0 0 10px}.card p,.card li{font-size:15px;line-height:1.55}.eyebrow{font-size:12px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:#7441a0}.button{display:inline-block;border:0;border-radius:11px;background:#63328d;color:white;padding:12px 15px;font-size:15px;font-weight:700;text-decoration:none;cursor:pointer}.button:focus-visible,.back:focus-visible,input:focus-visible{outline:3px solid #f0b942;outline-offset:3px}.muted{color:#625970;font-size:13px}.check{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px solid #eee6f2}.check:last-child{border:0}.check input{margin-top:3px;width:20px;height:20px;accent-color:#63328d;flex-shrink:0}.foot{font-size:12px;line-height:1.5;color:#625970;margin-top:18px}
+</style>
+</head>
+<body><main class="wrap">
+<header class="top"><span class="brand">CJ Legacy Care Partners 💜</span><a class="back" href="./index.html#more">← Back to app</a></header>
+<div class="banner"><strong>Prototype demonstration — educational content only.</strong> Do not enter real personal, medical, financial, or legal information into this prototype.</div>
+<section class="hero"><div style="font-size:12px;letter-spacing:.1em;font-weight:800">CARE HUB · CARE COORDINATION</div><h1>Advance Care Planning</h1><p>Protecting your loved one's voice. Helping your family prepare together.</p></section>
+<section class="card"><div class="eyebrow">Understand</div><h2>What is an advance directive?</h2><p>An advance directive is a legal document that may let someone name a healthcare decision-maker and express treatment preferences for situations when they cannot make or communicate medical decisions.</p><p>Requirements vary by state. The person receiving care should guide these decisions while able to do so.</p></section>
+<section class="card"><div class="eyebrow">Locate</div><h2>Find your state's forms</h2><p>Use the national CaringInfo directory to find state-specific advance directive forms and guidance. When a person receives care across states, ask a qualified professional about recognition and applicable requirements.</p><a class="button" href="https://www.caringinfo.org/planning/advance-directives/" target="_blank" rel="noopener noreferrer">Browse state-specific forms ↗</a><p class="muted">External resource · CaringInfo. Check state requirements before signing.</p></section>
+<section class="card"><div class="eyebrow">Coordinate</div><h2>Family planning checklist</h2><p class="muted">Demo checklist only. Changes last only while this page is open; nothing is saved or uploaded.</p><div id="checklist">
+<label class="check"><input type="checkbox"><span>Talk about what matters most to the care recipient.</span></label>
+<label class="check"><input type="checkbox"><span>Identify a preferred healthcare decision-maker and alternate.</span></label>
+<label class="check"><input type="checkbox"><span>Review appropriate state forms and signing requirements.</span></label>
+<label class="check"><input type="checkbox"><span>Discuss complex treatment preferences with a healthcare professional.</span></label>
+<label class="check"><input type="checkbox"><span>Arrange qualified witnesses or notarization if required.</span></label>
+<label class="check"><input type="checkbox"><span>Give copies to the healthcare agent and appropriate care providers.</span></label>
+<label class="check"><input type="checkbox"><span>Plan to review the directive after major life or care changes.</span></label>
+</div><button class="button" type="button" id="reset" style="margin-top:14px">Reset demo checklist</button></section>
+<section class="card"><div class="eyebrow">Family Care Village</div><h2>Who does what?</h2><p><strong>Healthcare agent:</strong> The person legally appointed to make covered healthcare decisions when authorized.</p><p><strong>Family Care Village:</strong> Relatives and other helpers who may assist with scheduling, transportation, communication, and document coordination. Participation alone does not grant legal decision-making authority.</p></section>
+<p class="foot">Educational content, not legal or medical advice. This page does not create or validate an advance directive, provide electronic signatures, verify legal authority, store documents, or securely transmit information. In emergencies, call 911.</p>
+</main><script>document.getElementById('reset').addEventListener('click',()=>{document.querySelectorAll('#checklist input[type="checkbox"]').forEach(box=>box.checked=false)});</script></body></html>
